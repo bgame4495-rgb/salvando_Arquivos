@@ -5,7 +5,7 @@ os.system("cls")
 @dataclass
 class Funcionario:
     nome: str 
-    data_nascimento: str 
+    data_nascimento: float
     rg: int
     cpf: int
 
@@ -16,9 +16,11 @@ lista_de_funcionarios = []
 quantidade_de_funcionarios = 5
 
 for i in range(quantidade_de_funcionarios):
-    Funcionario= Funcionario(
-        nome = input("Digite seu nome: "),data_nascimento = input("Digite sua data de nascimento: "),
-        rg = int(input("Digite seu RG: ")), cpf = int(input("Digite seu CPF: "))
+    funcionario = Funcionario(
+        nome = input("Digite seu nome: "),
+        data_nascimento = input("Digite sua data de nascimento: "),
+        rg = int(input("Digite seu RG: ")),
+        cpf = int(input("Digite seu CPF: "))
     )
     lista_de_funcionarios.append(Funcionario) 
     nome_do_arquivo = "Funcionarios.csv"
