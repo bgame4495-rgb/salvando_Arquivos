@@ -1,43 +1,52 @@
 from dataclasses import dataclass
-import os
-os.system("cls") 
 
 @dataclass
 class Funcionario:
-    nome: str 
-    data_nascimento: float
+    nome: str
+    data_nascimento: str
     rg: int
     cpf: int
 
     def exibir_dados(self):
-        print(f"Nome: {self.nome} \nData de Nascimento: {self.data_nascimento}\nRG: {self.rg}\nCPF: {self.cpf}")
+        print(f"Nome: {self.nome}")
+        print(f"Data de Nascimento: {self.data_nascimento}")
+        print(f"RG: {self.rg}")
+        print(f"CPF: {self.cpf}")
+        print("-" * 30)
 
 lista_de_funcionarios = []
 quantidade_de_funcionarios = 5
+nome_do_arquivo = "Funcionarios.csv"
 
+# Entrada de dados
 for i in range(quantidade_de_funcionarios):
     funcionario = Funcionario(
-        nome = input("Digite seu nome: "),
-        data_nascimento = input("Digite sua data de nascimento: "),
-        rg = int(input("Digite seu RG: ")),
-        cpf = int(input("Digite seu CPF: "))
+        nome=input("Digite seu nome: "),
+        data_nascimento=input("Digite sua data de nascimento: "),
+        rg=int(input("Digite seu RG: ")),
+        cpf=int(input("Digite seu CPF: "))
     )
-    lista_de_funcionarios.append(Funcionario) 
-    nome_do_arquivo = "Funcionarios.csv"
+    lista_de_funcionarios.append(funcionario)
 
-with open(nome_do_arquivo, "a") as arquivo_funcionarios:
-    for Funcionario in lista_de_funcionarios:
-        arquivo_funcionarios.write(f"Nome:{Funcionario.nome},\n Data de Nascimento:{Funcionario.data_nascimento},\n RG:{Funcionario.rg},\n CPF:{Funcionario.cpf}\n")
-print("Dados salvos com sucesso.")
-print("\nExibindo todos os funcionarios: ")
+# Salvando no arquivo
+with open(nome_do_arquivo, "a", encoding="utf-8") as arquivo:
+    for funcionario in lista_de_funcionarios:
+        arquivo.write(f"{funcionario.nome},{funcionario.data_nascimento},{funcionario.rg},{funcionario.cpf}\n")
+
+print("Dados salvos com sucesso.\n")
+
+# Lendo o arquivo
+print("Exibindo todos os funcionarios:\n")
 try:
-    with open("nome_do_arquivo", "r", encoding="utf-8") as arquivo:
-        lista_todos_funcionarios = arquivo.readlines()
-        for Funcionario in lista_todos_funcionarios:
-            nome, data_nascimento, rg, cpf = Funcionario.strip().split(", ")
-            Funcionario = Funcionario(nome, data_nascimento, rg, cpf)
-            lista_todos_funcionarios.append(Funcionario)
-        for Funcionario in lista_todos_funcionarios:
-            Funcionario.exibir_dados()
+    lista_todos_funcionarios = []
+    with open(nome_do_arquivo, "r", encoding="utf-8") as arquivo:
+        for linha in arquivo:
+            nome, data_nascimento, rg, cpf = linha.strip().split(",")
+            funcionario = Funcionario(nome, data_nascimento, int(rg), int(cpf))
+            lista_todos_funcionarios.append(funcionario)
+
+    for f in lista_todos_funcionarios:
+        f.exibir_dados()
+
 except FileNotFoundError:
-    print("O arquivo nao foi encontrado.")  
+    print("O arquivo nao foi encontrado.")
